@@ -1,0 +1,112 @@
+using System;
+
+namespace UniversityMembersApp
+{
+    // 1. Base Class: Person
+    public class Person
+    {
+        public string Name { get; set; }
+        public string Email { get; set; }
+
+        // Constructor
+        public Person(string name, string email)
+        {
+            Console.WriteLine("[Constructor] Person executed");
+            Name = name;
+            Email = email;
+        }
+
+        // Method to display basic info
+        public void DisplayBasicInfo()
+        {
+            Console.WriteLine($"Name: {Name}, Email: {Email}");
+        }
+    }
+
+    // 2. Derived Class: Student (inherits from Person)
+    public class Student : Person
+    {
+        public string StudentId { get; set; }
+        public double GPA { get; set; }
+
+        // Constructor using base(...)
+        public Student(string name, string email, string studentId, double gpa) 
+            : base(name, email)
+        {
+            Console.WriteLine("[Constructor] Student executed");
+            StudentId = studentId;
+            GPA = gpa;
+        }
+
+        public void DisplayStudentInfo()
+        {
+            DisplayBasicInfo();
+            Console.WriteLine($"Student ID: {StudentId}, GPA: {GPA}");
+        }
+    }
+
+    // 3. Derived Class: Employee (inherits from Person)
+    public class Employee : Person
+    {
+        public string EmployeeId { get; set; }
+        public double Salary { get; set; }
+
+        // Constructor using base(...)
+        public Employee(string name, string email, string employeeId, double salary) 
+            : base(name, email)
+        {
+            Console.WriteLine("[Constructor] Employee executed");
+            EmployeeId = employeeId;
+            Salary = salary;
+        }
+
+        public void DisplayEmployeeInfo()
+        {
+            DisplayBasicInfo();
+            Console.WriteLine($"Employee ID: {EmployeeId}, Salary: ${Salary}");
+        }
+    }
+
+    // 4. Derived Class: Teacher (inherits from Employee)
+    public class Teacher : Employee
+    {
+        public string CourseName { get; set; }
+
+        // Constructor using base(...)
+        public Teacher(string name, string email, string employeeId, double salary, string courseName) 
+            : base(name, email, employeeId, salary)
+        {
+            Console.WriteLine("[Constructor] Teacher executed");
+            CourseName = courseName;
+        }
+
+        public void Teach()
+        {
+            Console.WriteLine($"{Name} is teaching the course: {CourseName}");
+        }
+    }
+
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            Console.WriteLine("--- Creating Student Object ---");
+            // Create object from Student
+            Student student = new Student("Ahmed Barshid", "ahmed@example.com", "S12345", 3.85);
+            Console.WriteLine("\n--- Student Methods ---");
+            student.DisplayStudentInfo(); // Specialized method (calls inherited DisplayBasicInfo internally)
+
+            Console.WriteLine("\n====================================");
+
+            Console.WriteLine("\n--- Creating Teacher Object ---");
+            // Create object from Teacher
+            Teacher teacher = new Teacher("Dr. Ali", "ali@example.com", "E9876", 5000.0, "Object-Oriented Programming");
+            Console.WriteLine("\n--- Teacher Methods ---");
+            teacher.DisplayBasicInfo();    // Inherited method from Person
+            teacher.DisplayEmployeeInfo(); // Inherited method from Employee
+            teacher.Teach();               // Specialized method in Teacher
+
+            Console.ReadLine();
+        }
+    }
+}
